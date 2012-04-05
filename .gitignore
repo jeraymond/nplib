@@ -1,0 +1,5 @@
+*.o
+*.gch
+*.so
+np-lib-test
+*.dSYM
