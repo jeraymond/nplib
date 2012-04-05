@@ -19,10 +19,10 @@
 #include <CUnit/Basic.h>
 
 #include "np_dict_test.h"
+#include "np_linkedlist_test.h"
 
 int setup(void);
 int teardown(void);
-
 
 int main(void)
 {
@@ -36,6 +36,9 @@ int main(void)
     goto exit;
   }
   if (CU_add_test(pSuite, "Dict Tests", np_dict_test) == NULL) {
+    goto exit;
+  }
+  if (CU_add_test(pSuite, "Linked List Tests", np_linkedlist_test) == NULL) {
     goto exit;
   }
   CU_basic_set_mode(CU_BRM_VERBOSE);

@@ -20,12 +20,19 @@ Builds `src/libnplib.so` then builds and runs a C-Unit based test program in
 
 ### np_dict
 
-np_dict is a simple dictionary (hashtable). Hash collisions are resolved
-with chaining. The dictionary source is contained in:
+np_dict implements a dictionary (hashtable). Hash collisions are resolved
+with chaining. The source is located:
 
      src/np_dict.h
      src/np_dict.c
 
 See `test/np_dict_test.c` for sample usage.
 
+### np_linkedlist
 
+np_linkedlist is a singly linked list. The source is located:
+
+     src/np_linkedlist.h
+     src/np_linkedlist.c
+
+See `test/np_linkedlist_test.c` for sample usage.
