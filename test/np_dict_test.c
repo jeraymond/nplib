@@ -30,8 +30,8 @@ void np_dict_test(void) {
   CU_ASSERT_NOT_EQUAL(NULL, dict = np_dict_new(np_dict_test_cmp,
 					       np_dict_test_hash));
   CU_ASSERT_STRING_EQUAL(value, np_dict_put(dict, key, value));
-  CU_ASSERT_STRING_EQUAL(value, (char *)np_dict_get(dict, key));
-  CU_ASSERT_STRING_EQUAL(value, (char *)np_dict_remove(dict, key));
+  CU_ASSERT_STRING_EQUAL(value, np_dict_get(dict, key));
+  CU_ASSERT_STRING_EQUAL(value, np_dict_remove(dict, key));
   CU_ASSERT_EQUAL(NULL, np_dict_get(dict, key));
   np_dict_free(dict);
 }
