@@ -27,14 +27,39 @@ void np_linkedlist_test(void) {
   char *data1 = "The first data item";
   char *data2 = "The second data item";
 
+  /* push and pop */
   CU_ASSERT_NOT_EQUAL(NULL, list = np_linkedlist_new());
   CU_ASSERT_STRING_EQUAL(data1, np_linkedlist_push(list, data1));
-  CU_ASSERT_STRING_EQUAL(data1, (char *)np_linkedlist_pop(list));
+  CU_ASSERT_STRING_EQUAL(data1, np_linkedlist_pop(list));
   CU_ASSERT_EQUAL(NULL, np_linkedlist_pop(list));
   CU_ASSERT_STRING_EQUAL(data1, np_linkedlist_push(list, data1));
   CU_ASSERT_STRING_EQUAL(data2, np_linkedlist_push(list, data2));
-  CU_ASSERT_STRING_EQUAL(data2, (char *)np_linkedlist_pop(list));
-  CU_ASSERT_STRING_EQUAL(data1, (char *)np_linkedlist_pop(list));
+  CU_ASSERT_STRING_EQUAL(data2, np_linkedlist_pop(list));
+  CU_ASSERT_STRING_EQUAL(data1, np_linkedlist_pop(list));
   CU_ASSERT_EQUAL(NULL, np_linkedlist_pop(list));
+
+  /* reverse */
+  np_linkedlist_reverse(list);
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_pop(list));
+
+  np_linkedlist_push(list, data1);
+  np_linkedlist_reverse(list);
+  CU_ASSERT_STRING_EQUAL(data1, np_linkedlist_pop(list));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_pop(list));
+
+  np_linkedlist_push(list, data1);
+  np_linkedlist_push(list, data2);
+  np_linkedlist_reverse(list);
+  CU_ASSERT_STRING_EQUAL(data1, np_linkedlist_pop(list));
+  CU_ASSERT_STRING_EQUAL(data2, np_linkedlist_pop(list));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_pop(list));
+
+  /* length */
+  CU_ASSERT_EQUAL(0, np_linkedlist_length(list));
+  np_linkedlist_push(list, data1);
+  CU_ASSERT_EQUAL(1, np_linkedlist_length(list));
+  np_linkedlist_push(list, data1);
+  CU_ASSERT_EQUAL(2, np_linkedlist_length(list));
+
   np_linkedlist_free(list);
 }

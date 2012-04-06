@@ -93,3 +93,43 @@ void *np_linkedlist_pop(struct NpLinkedList *list)
   free(node);
   return item;
 }
+
+/**
+ Reverses the list.
+
+ @param list The list.
+ */
+void np_linkedlist_reverse(struct NpLinkedList *list)
+{
+  struct NpLinkedListNode *prev;
+  struct NpLinkedListNode *next;
+
+  prev = NULL;
+  while(list->head) {
+    next = list->head->next;
+    list->head->next = prev;
+    prev = list->head;
+    list->head = next;
+  }
+  list->head = prev;
+}
+
+/**
+ Determines the length of the list.
+
+ @param list The list.
+ @return the length of the list.
+ */
+unsigned np_linkedlist_length(struct NpLinkedList *list)
+{
+  struct NpLinkedListNode *node;
+  unsigned length;
+
+  length = 0;
+  node = list->head;
+  while (node) {
+    ++length;
+    node = node->next;
+  }
+  return length;
+}

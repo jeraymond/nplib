@@ -32,5 +32,7 @@ struct NpLinkedList *np_linkedlist_new();
 void np_linkedlist_free(struct NpLinkedList *list);
 void *np_linkedlist_push(struct NpLinkedList *list, void *item);
 void *np_linkedlist_pop(struct NpLinkedList *list);
+void np_linkedlist_reverse(struct NpLinkedList *list);
+unsigned np_linkedlist_length(struct NpLinkedList *list);
 
 #endif
