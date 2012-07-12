@@ -19,20 +19,68 @@
 #ifndef __NP_LINKEDLIST_H
 #define __NP_LINKEDLIST_H
 
+/** Linked list object */
 struct NpLinkedList {
+
+  /** The head of the list */
   struct NpLinkedListNode *head;
 };
 
+/** Linked list node */
 struct NpLinkedListNode {
+
+  /** Pointer to the node data */
   void *data;
+
+  /** The next node in the list */
   struct NpLinkedListNode *next;
 };
 
+/**
+   Allocates memory for and initializes a linked list.
+
+   @return a pointer to the allocated memory or NULL on error
+*/
 struct NpLinkedList *np_linkedlist_new();
+
+/**
+   Frees the memory used by the list. Does not free the values contained in the
+   list.
+
+   @param list the list to free
+*/
 void np_linkedlist_free(struct NpLinkedList *list);
+
+/**
+   Adds an item to the head of the list.
+
+   @param list the list
+   @param item the item to push
+   @return the pushed item or NULL on error
+*/
 void *np_linkedlist_push(struct NpLinkedList *list, void *item);
+
+/**
+   Removes the item at the head of the list.
+
+   @param list the list
+   @return the first item in the list or NULL on error
+*/
 void *np_linkedlist_pop(struct NpLinkedList *list);
+
+/**
+   Reverses the list.
+
+   @param list the list
+*/
 void np_linkedlist_reverse(struct NpLinkedList *list);
+
+/**
+   Determines the length of the list.
+
+   @param list the list
+   @return the length of the list
+*/
 unsigned np_linkedlist_length(struct NpLinkedList *list);
 
 #endif

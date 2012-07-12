@@ -19,11 +19,6 @@
 #include <stdlib.h>
 #include "np_linkedlist.h"
 
-/**
- Allocates memory for and initializes a linked list.
-
- @return a pointer to the allocated memory or NULL on error.
- */
 struct NpLinkedList *np_linkedlist_new()
 {
   struct NpLinkedList *list;
@@ -35,12 +30,6 @@ struct NpLinkedList *np_linkedlist_new()
   return list;
 }
 
-/**
- Frees the memory used by the list. Does not free the values contained in the
- list.
-
- @param list The list to free.
- */
 void np_linkedlist_free(struct NpLinkedList *list)
 {
   struct NpLinkedListNode *node;
@@ -54,13 +43,6 @@ void np_linkedlist_free(struct NpLinkedList *list)
   }
 }
 
-/**
- Adds an item to the head of the list.
-
- @param list The list.
- @param item The item to push.
- @return the pushed item or NULL on error.
- */
 void *np_linkedlist_push(struct NpLinkedList *list, void *item)
 {
   struct NpLinkedListNode *node;
@@ -74,12 +56,6 @@ void *np_linkedlist_push(struct NpLinkedList *list, void *item)
   return item;
 }
 
-/**
- Removes the item at the head of the list.
-
- @param The list.
- @return the first item in the list or NULL on error.
- */
 void *np_linkedlist_pop(struct NpLinkedList *list)
 {
   struct NpLinkedListNode *node;
@@ -94,11 +70,6 @@ void *np_linkedlist_pop(struct NpLinkedList *list)
   return item;
 }
 
-/**
- Reverses the list.
-
- @param list The list.
- */
 void np_linkedlist_reverse(struct NpLinkedList *list)
 {
   struct NpLinkedListNode *prev;
@@ -114,12 +85,6 @@ void np_linkedlist_reverse(struct NpLinkedList *list)
   list->head = prev;
 }
 
-/**
- Determines the length of the list.
-
- @param list The list.
- @return the length of the list.
- */
 unsigned np_linkedlist_length(struct NpLinkedList *list)
 {
   struct NpLinkedListNode *node;
