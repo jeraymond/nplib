@@ -15,5 +15,4 @@ clean:
 	@-rm -f *.o
 	@-rm -f *.gch
 	@-rm -f *.so
-	@-rm -f $(TEST_TARGET)
 	@-rm -rf *.dSYM
