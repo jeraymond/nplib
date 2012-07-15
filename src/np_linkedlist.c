@@ -72,17 +72,17 @@ void *np_linkedlist_pop(struct NpLinkedList *list)
 
 void np_linkedlist_reverse(struct NpLinkedList *list)
 {
-  struct NpLinkedListNode *prev;
+  struct NpLinkedListNode *previous;
   struct NpLinkedListNode *next;
 
-  prev = NULL;
+  previous = NULL;
   while(list->head) {
     next = list->head->next;
-    list->head->next = prev;
-    prev = list->head;
+    list->head->next = previous;
+    previous = list->head;
     list->head = next;
   }
-  list->head = prev;
+  list->head = previous;
 }
 
 unsigned np_linkedlist_length(struct NpLinkedList *list)
@@ -97,4 +97,62 @@ unsigned np_linkedlist_length(struct NpLinkedList *list)
     node = node->next;
   }
   return length;
+}
+
+void *np_linkedlist_add(struct NpLinkedList *list, void *item, unsigned index)
+{
+  struct NpLinkedListNode *node;
+  struct NpLinkedListNode *previous;
+  struct NpLinkedListNode *current;
+  unsigned currentIndex;
+
+  if (index == 0)
+    return np_linkedlist_push(list, item);
+
+  currentIndex = 0;
+  previous = list->head;
+  current = list->head;
+  while(previous) {
+    if (currentIndex == index) {
+      node = malloc(sizeof *node);
+      if (node == NULL)
+	return NULL;
+      node->data = item;
+      node->next = current;
+      previous->next = node;
+      return item;
+    }
+    currentIndex++;
+    previous = current;
+    if (current)
+      current = current->next;
+  }
+  return NULL;
+}
+
+void *np_linkedlist_remove(struct NpLinkedList *list, unsigned index)
+{
+  struct NpLinkedListNode *previous;
+  struct NpLinkedListNode *current;
+  void *item;
+  unsigned currentIndex;
+
+  if (index == 0)
+    return np_linkedlist_pop(list);
+
+  currentIndex = 0;
+  previous = list->head;
+  current = list->head;
+  while(current) {
+    if (currentIndex == index) {
+      previous->next = current->next;
+      item = current->data;
+      free(current);
+      return item;
+    }
+    currentIndex++;
+    previous = current;
+    current = current->next;
+  }
+  return NULL;
 }

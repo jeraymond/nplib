@@ -19,20 +19,30 @@
 #ifndef __NP_LINKEDLIST_H
 #define __NP_LINKEDLIST_H
 
-/** Linked list object */
+/**
+   Linked list object
+*/
 struct NpLinkedList {
 
-  /** The head of the list */
+  /**
+     The head of the list
+  */
   struct NpLinkedListNode *head;
 };
 
-/** Linked list node */
+/**
+   Linked list node
+*/
 struct NpLinkedListNode {
 
-  /** Pointer to the node data */
+  /**
+     Pointer to the node data
+  */
   void *data;
 
-  /** The next node in the list */
+  /**
+     The next node in the list
+  */
   struct NpLinkedListNode *next;
 };
 
@@ -82,5 +92,26 @@ void np_linkedlist_reverse(struct NpLinkedList *list);
    @return the length of the list
 */
 unsigned np_linkedlist_length(struct NpLinkedList *list);
+
+/**
+   Adds the item to the list at the given index shifting the existing item at
+   the index (if any) and subsequent items to the right.
+
+   @param list the list
+   @param item the item to add
+   @param index the insert index
+   @return the added item or NULL on error
+*/
+void *np_linkedlist_add(struct NpLinkedList *list, void *item, unsigned index);
+
+/**
+   Removes the item at the given index shifting any remaining items after
+   that index (if any) to the left.
+
+   @param list the list
+   @param index the removal index
+   @return the item removed or NULL on error
+*/
+void *np_linkedlist_remove(struct NpLinkedList *list, unsigned index);
 
 #endif

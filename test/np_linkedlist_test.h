@@ -19,6 +19,8 @@
 #ifndef __NP_LINKEDLIST_TEST_H
 #define __NP_LINKEDLIST_TEST_H
 
-void np_linkedlist_test(void);
+void np_linkedlist_test_basics(void);
+void np_linkedlist_test_add(void);
+void np_linkedlist_test_remove(void);
 
 #endif

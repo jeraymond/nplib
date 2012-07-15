@@ -38,7 +38,16 @@ int main(void)
   if (CU_add_test(pSuite, "Dict Tests", np_dict_test) == NULL) {
     goto exit;
   }
-  if (CU_add_test(pSuite, "Linked List Tests", np_linkedlist_test) == NULL) {
+  if (CU_add_test(pSuite, "Linked List Basic Tests",
+		  np_linkedlist_test_basics) == NULL) {
+    goto exit;
+  }
+  if (CU_add_test(pSuite, "Linked List Add Tests",
+		  np_linkedlist_test_add) == NULL) {
+    goto exit;
+  }
+  if (CU_add_test(pSuite, "Linked List Remove Tests",
+		  np_linkedlist_test_remove) == NULL) {
     goto exit;
   }
   CU_basic_set_mode(CU_BRM_VERBOSE);
