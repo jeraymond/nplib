@@ -50,6 +50,14 @@ int main(void)
 		  np_linkedlist_test_remove) == NULL) {
     goto exit;
   }
+  if (CU_add_test(pSuite, "Linked List Get Tests",
+		  np_linkedlist_test_get) == NULL) {
+    goto exit;
+  }
+  if (CU_add_test(pSuite, "Linked List Iterator Tests",
+		  np_linkedlist_test_iterator) == NULL) {
+    goto exit;
+  }
   CU_basic_set_mode(CU_BRM_VERBOSE);
   CU_basic_run_tests();
 

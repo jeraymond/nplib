@@ -47,6 +47,17 @@ struct NpLinkedListNode {
 };
 
 /**
+   Linked list iterator
+*/
+struct NpLinkedListIterator {
+
+  /**
+     The current node
+  */
+  struct NpLinkedListNode *node;
+};
+
+/**
    Allocates memory for and initializes a linked list.
 
    @return a pointer to the allocated memory or NULL on error
@@ -113,5 +124,38 @@ void *np_linkedlist_add(struct NpLinkedList *list, void *item, unsigned index);
    @return the item removed or NULL on error
 */
 void *np_linkedlist_remove(struct NpLinkedList *list, unsigned index);
+
+/**
+   Gets the item at the given index.
+
+   @param list the list
+   @param index the index of the item to get
+   @return the item at the index or NULL if there is no such item
+*/
+void *np_linkedlist_get(struct NpLinkedList *list, unsigned index);
+
+/**
+   Creates a new iterator for the given list. Free the iterator with
+   np_linkedlist_iterator_free() when done with it.
+
+   @param list the list
+   @return the iterator or NULL if the iterator could not be created
+*/
+struct NpLinkedListIterator *np_linkedlist_iterator(struct NpLinkedList *list);
+
+/**
+   Frees the memory used by the iterator.
+
+   @param iter the iterator
+*/
+void np_linkedlist_iterator_free(struct NpLinkedListIterator *iter);
+
+/**
+   Gets the next item from the iterator.
+
+   @param iter the iterator
+   @return the next item or NULL when no items are left
+*/
+void *np_linkedlist_iterator_next(struct NpLinkedListIterator *iter);
 
 #endif

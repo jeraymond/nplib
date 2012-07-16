@@ -145,3 +145,65 @@ void np_linkedlist_test_remove(void)
 
   np_linkedlist_free(list);
 }
+
+void np_linkedlist_test_get(void)
+{
+  struct NpLinkedList *list;
+  char *data1 = "The first data item";
+  char *data2 = "The second data item";
+
+  list = np_linkedlist_new();
+
+  /* get item from empty list */
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_get(list, 0));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_get(list, 1));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_get(list, 99));
+
+  /* single item */
+  CU_ASSERT_EQUAL(data1, np_linkedlist_push(list, data1));
+  CU_ASSERT_EQUAL(data1, np_linkedlist_get(list, 0));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_get(list, 1));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_get(list, 99));
+
+  /* multiple items */
+  CU_ASSERT_EQUAL(data2, np_linkedlist_push(list, data2));
+  CU_ASSERT_EQUAL(data1, np_linkedlist_get(list, 1));
+  CU_ASSERT_EQUAL(data2, np_linkedlist_get(list, 0));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_get(list, 2));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_get(list, 99));
+
+  np_linkedlist_free(list);
+}
+
+void np_linkedlist_test_iterator(void)
+{
+  struct NpLinkedList *list;
+  struct NpLinkedListIterator *iter;
+  char *data1 = "The first data item";
+  char *data2 = "The second data item";
+
+  list = np_linkedlist_new();
+
+  /* get iterator for empty list */
+  iter = np_linkedlist_iterator(list);
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_iterator_next(iter));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_iterator_next(iter));
+  np_linkedlist_iterator_free(iter);
+
+  /* single item */
+  CU_ASSERT_EQUAL(data1, np_linkedlist_push(list, data1));
+  iter = np_linkedlist_iterator(list);
+  CU_ASSERT_EQUAL(data1, np_linkedlist_iterator_next(iter));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_iterator_next(iter));
+  np_linkedlist_iterator_free(iter);
+
+  /* multiple items */
+  CU_ASSERT_EQUAL(data2, np_linkedlist_push(list, data2));
+  iter = np_linkedlist_iterator(list);
+  CU_ASSERT_EQUAL(data2, np_linkedlist_iterator_next(iter));
+  CU_ASSERT_EQUAL(data1, np_linkedlist_iterator_next(iter));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_iterator_next(iter));
+  np_linkedlist_iterator_free(iter);
+
+  np_linkedlist_free(list);
+}

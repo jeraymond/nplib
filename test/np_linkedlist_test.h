@@ -22,5 +22,7 @@
 void np_linkedlist_test_basics(void);
 void np_linkedlist_test_add(void);
 void np_linkedlist_test_remove(void);
+void np_linkedlist_test_get(void);
+void np_linkedlist_test_iterator(void);
 
 #endif

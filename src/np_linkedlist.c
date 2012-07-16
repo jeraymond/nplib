@@ -41,6 +41,7 @@ void np_linkedlist_free(struct NpLinkedList *list)
     free(node);
     node = next;
   }
+  free(list);
 }
 
 void *np_linkedlist_push(struct NpLinkedList *list, void *item)
@@ -155,4 +156,49 @@ void *np_linkedlist_remove(struct NpLinkedList *list, unsigned index)
     current = current->next;
   }
   return NULL;
+}
+
+void *np_linkedlist_get(struct NpLinkedList *list, unsigned index)
+{
+  struct NpLinkedListNode *node;
+  unsigned currentIndex;
+
+  currentIndex = 0;
+  node = list->head;
+  while (node) {
+    if (currentIndex == index) {
+      return node->data;
+    }
+    ++currentIndex;
+    node = node->next;
+  }
+  return NULL;
+}
+
+struct NpLinkedListIterator *np_linkedlist_iterator(struct NpLinkedList *list)
+{
+  struct NpLinkedListIterator *iter;
+
+  iter = malloc(sizeof *iter);
+  if (iter == NULL)
+    return NULL;
+  iter->node = list->head;
+  return iter;
+}
+
+void np_linkedlist_iterator_free(struct NpLinkedListIterator *iter)
+{
+  free(iter);
+}
+
+void *np_linkedlist_iterator_next(struct NpLinkedListIterator *iter)
+{
+  void *item;
+
+  item = NULL;
+  if (iter->node) {
+    item = iter->node->data;
+    iter->node = iter->node->next;
+  }
+  return item;
 }
