@@ -36,3 +36,12 @@ np_linkedlist is a singly linked list. The source is located:
      src/np_linkedlist.c
 
 See `test/np_linkedlist_test.c` for sample usage.
+
+### np_arraylist
+
+np_arraylist is a dynamic array. The source is located:
+
+     src/np_arraylist.h
+     src/np_arraylist.c
+
+See `test/np_arraylist_test.c` for sample usage.

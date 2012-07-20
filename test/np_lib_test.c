@@ -20,6 +20,7 @@
 
 #include "np_dict_test.h"
 #include "np_linkedlist_test.h"
+#include "np_arraylist_test.h"
 
 int setup(void);
 int teardown(void);
@@ -35,9 +36,13 @@ int main(void)
   if (pSuite == NULL) {
     goto exit;
   }
+
+  /* dictionary */
   if (CU_add_test(pSuite, "Dict Tests", np_dict_test) == NULL) {
     goto exit;
   }
+
+  /* linked list */
   if (CU_add_test(pSuite, "Linked List Basic Tests",
 		  np_linkedlist_test_basics) == NULL) {
     goto exit;
@@ -58,6 +63,33 @@ int main(void)
 		  np_linkedlist_test_iterator) == NULL) {
     goto exit;
   }
+
+  /* array list */
+  if (CU_add_test(pSuite, "Array List Basic Tests",
+		  np_arraylist_test_basics) == NULL) {
+    goto exit;
+  }
+  if (CU_add_test(pSuite, "Array List Add Tests",
+		  np_arraylist_test_add) == NULL) {
+    goto exit;
+  }
+  if (CU_add_test(pSuite, "Array List Remove Tests",
+		  np_arraylist_test_remove) == NULL) {
+    goto exit;
+  }
+  if (CU_add_test(pSuite, "Array List Get Tests",
+		  np_arraylist_test_get) == NULL) {
+    goto exit;
+  }
+  if (CU_add_test(pSuite, "Array List Iterator Tests",
+		  np_arraylist_test_iterator) == NULL) {
+    goto exit;
+  }
+  if (CU_add_test(pSuite, "Array List Realloc Tests",
+		  np_arraylist_test_realloc) == NULL) {
+    goto exit;
+  }
+
   CU_basic_set_mode(CU_BRM_VERBOSE);
   CU_basic_run_tests();
 

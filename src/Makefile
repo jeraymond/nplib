@@ -1,7 +1,7 @@
 LIB = libnplib.so
 OBJ = np_dict.o
-INC = np_dict.h np_linkedlist.h
-SRC = np_dict.c np_linkedlist.c
+INC = np_dict.h np_linkedlist.h np_arraylist.h
+SRC = np_dict.c np_linkedlist.c np_arraylist.c
 CCFLAGS = -std=c99 -pedantic -Wall -W -g -O2 -ansi
 LIBFLAGS = -fpic -c
 
