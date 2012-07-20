@@ -26,6 +26,7 @@ void np_linkedlist_test_basics(void) {
   struct NpLinkedList *list;
   char *data1 = "The first data item";
   char *data2 = "The second data item";
+  char *data3 = "The third data item";
 
   /* push and pop */
   CU_ASSERT_NOT_EQUAL(NULL, list = np_linkedlist_new());
@@ -52,6 +53,15 @@ void np_linkedlist_test_basics(void) {
   np_linkedlist_reverse(list);
   CU_ASSERT_EQUAL(data1, np_linkedlist_pop(list));
   CU_ASSERT_EQUAL(data2, np_linkedlist_pop(list));
+  CU_ASSERT_EQUAL(NULL, np_linkedlist_pop(list));
+
+  np_linkedlist_push(list, data1);
+  np_linkedlist_push(list, data2);
+  np_linkedlist_push(list, data3);
+  np_linkedlist_reverse(list);
+  CU_ASSERT_EQUAL(data1, np_linkedlist_pop(list));
+  CU_ASSERT_EQUAL(data2, np_linkedlist_pop(list));
+  CU_ASSERT_EQUAL(data3, np_linkedlist_pop(list));
   CU_ASSERT_EQUAL(NULL, np_linkedlist_pop(list));
 
   /* length */
