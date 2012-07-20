@@ -30,7 +30,7 @@ struct NpArrayList *np_arraylist_new()
     return NULL;
   list->size = 0;
   list->allocated = NP_ARRAYLIST_DEFAULT_ALLOC_SIZE;
-  list->data = malloc((sizeof list->data) * NP_ARRAYLIST_DEFAULT_ALLOC_SIZE);
+  list->data = malloc((sizeof *list->data) * NP_ARRAYLIST_DEFAULT_ALLOC_SIZE);
   if (list->data == NULL) {
     free(list);
     return NULL;
@@ -59,7 +59,7 @@ static struct NpArrayList *np_arraylist_realloc(struct NpArrayList *list)
       allocated = INT_MAX;
     else
       allocated = allocated << 1;
-    data = realloc(list->data, (sizeof list->data) * allocated);
+    data = realloc(list->data, (sizeof *list->data) * allocated);
     if (data == NULL)
       return NULL;
     list->data = data;
