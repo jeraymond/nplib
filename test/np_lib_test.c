@@ -19,6 +19,7 @@
 #include <CUnit/Basic.h>
 
 #include "np_dict_test.h"
+#include "np_treemap_test.h"
 #include "np_linkedlist_test.h"
 #include "np_arraylist_test.h"
 
@@ -39,6 +40,15 @@ int main(void)
 
   /* dictionary */
   if (CU_add_test(pSuite, "Dict Tests", np_dict_test) == NULL) {
+    goto exit;
+  }
+
+  /* tree map */
+  if (CU_add_test(pSuite, "Tree Map Tests", np_treemap_test) == NULL) {
+    goto exit;
+  }
+  if (CU_add_test(pSuite, "Tree Map Iterator Tests",
+		  np_treemap_test_iterator) == NULL) {
     goto exit;
   }
 

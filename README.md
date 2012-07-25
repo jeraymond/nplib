@@ -45,3 +45,13 @@ np_arraylist is a dynamic array. The source is located:
      src/np_arraylist.c
 
 See `test/np_arraylist_test.c` for sample usage.
+
+### np_treemap
+
+np_treemap is a red-black tree based sorted map. The map provides ordering
+on the keys based upon a given comparator function. The source is located:
+
+     src/np_treemap.h
+     src/np_treemap.c
+
+See `test/np_treemap_test.c` for sample usage.
