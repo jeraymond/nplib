@@ -1,5 +1,5 @@
 /*
- * np_dict_test.h: nplib dictionary test header
+ * np_hashmap_test.h: nplib hash map test header
  *
  * Copyright 2012 Jeremy Raymond
  *
@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-#ifndef __NP_DICT_TEST_H
-#define __NP_DICT_TEST_H
+#ifndef __NP_HASHMAP_TEST_H
+#define __NP_HASHMAP_TEST_H
 
-int np_dict_test_cmp(void *, void *);
-unsigned np_dict_test_hash(void *);
-void np_dict_test(void);
+int np_hashmap_test_cmp(void *, void *);
+unsigned np_hashmap_test_hash(void *);
+void np_hashmap_test(void);
 
 #endif

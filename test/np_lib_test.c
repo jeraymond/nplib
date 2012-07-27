@@ -18,7 +18,7 @@
 
 #include <CUnit/Basic.h>
 
-#include "np_dict_test.h"
+#include "np_hashmap_test.h"
 #include "np_treemap_test.h"
 #include "np_linkedlist_test.h"
 #include "np_arraylist_test.h"
@@ -38,8 +38,8 @@ int main(void)
     goto exit;
   }
 
-  /* dictionary */
-  if (CU_add_test(pSuite, "Dict Tests", np_dict_test) == NULL) {
+  /* hash map */
+  if (CU_add_test(pSuite, "Hash Map Tests", np_hashmap_test) == NULL) {
     goto exit;
   }
 

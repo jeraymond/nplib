@@ -18,16 +18,6 @@ Builds `src/libnplib.so` then builds and runs a C-Unit based test program in
 
 ## Data Structures
 
-### np_dict
-
-np_dict implements a dictionary (hashtable). Hash collisions are resolved
-with chaining. The source is located:
-
-     src/np_dict.h
-     src/np_dict.c
-
-See `test/np_dict_test.c` for sample usage.
-
 ### np_linkedlist
 
 np_linkedlist is a singly linked list. The source is located:
@@ -45,6 +35,16 @@ np_arraylist is a dynamic array. The source is located:
      src/np_arraylist.c
 
 See `test/np_arraylist_test.c` for sample usage.
+
+### np_hashmap
+
+np_hashmap implements a hash based map (hashtable). Hash collisions are
+resolved with chaining. The source is located:
+
+     src/np_hashmap.h
+     src/np_hashmap.c
+
+See `test/np_hashmap_test.c` for sample usage.
 
 ### np_treemap
 

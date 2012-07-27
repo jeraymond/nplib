@@ -1,5 +1,5 @@
 /*
- * np_dict.c: nplib dictionary
+ * np_hashmap.c: nplib hash map
  *
  * Copyright 2012 Jeremy Raymond
  *
@@ -17,40 +17,40 @@
  */
 
 #include <stdlib.h>
-#include "np_dict.h"
+#include "np_hashmap.h"
 
-struct NpDict *np_dict_new(int (*key_compare)(void *key1, void *key2),
+struct NpHashMap *np_hashmap_new(int (*key_compare)(void *key1, void *key2),
                             unsigned (*key_hash)(void *key))
 {
-  struct NpDict *dict;
+  struct NpHashMap *map;
   int i;
   int size;
 
-  size = DICT_SIZE;
-  dict = malloc(sizeof *dict);
-  if (dict != NULL) {
-    if ((dict->items = malloc(sizeof *dict->items * size)) != NULL) {
-      dict->key_compare = key_compare;
-      dict->key_hash = key_hash;
-      dict->size = size;
+  size = HASHMAP_SIZE;
+  map = malloc(sizeof *map);
+  if (map != NULL) {
+    if ((map->items = malloc(sizeof *map->items * size)) != NULL) {
+      map->key_compare = key_compare;
+      map->key_hash = key_hash;
+      map->size = size;
       for (i = 0; i < size; ++i)
-	dict->items[i] = NULL;
+	map->items[i] = NULL;
     } else {
-      free(dict);
+      free(map);
       return NULL;
     }
   }
-  return dict;
+  return map;
 }
 
-void np_dict_free(struct NpDict *dict)
+void np_hashmap_free(struct NpHashMap *map)
 {
-  struct NpDictItem *item;
-  struct NpDictItem *next;
+  struct NpHashMapItem *item;
+  struct NpHashMapItem *next;
   unsigned i;
 
-  for (i = 0; i < dict->size; ++i) {
-    if ((item = dict->items[i]) == NULL)
+  for (i = 0; i < map->size; ++i) {
+    if ((item = map->items[i]) == NULL)
       continue;
     while(item) {
       next = item->next;
@@ -58,18 +58,18 @@ void np_dict_free(struct NpDict *dict)
       item = next;
     }
   }
-  free(dict->items);
-  free(dict);
+  free(map->items);
+  free(map);
 }
 
-void *np_dict_put(struct NpDict *dict, void *key, void *value)
+void *np_hashmap_put(struct NpHashMap *map, void *key, void *value)
 {
-  struct NpDictItem *item;
+  struct NpHashMapItem *item;
   int i;;
 
-  i = dict->key_hash(key) % dict->size;
-  for (item = dict->items[i]; item != NULL; item = item->next)
-    if (dict->key_compare(key, item->key) == 0)
+  i = map->key_hash(key) % map->size;
+  for (item = map->items[i]; item != NULL; item = item->next)
+    if (map->key_compare(key, item->key) == 0)
       break;
   if (item == NULL) {
     item = malloc(sizeof *item);
@@ -78,8 +78,8 @@ void *np_dict_put(struct NpDict *dict, void *key, void *value)
     } else {
       item->key = key;
       item->value = value;
-      item->next = dict->items[i];
-      dict->items[i] = item;
+      item->next = map->items[i];
+      map->items[i] = item;
     }
   } else {
     item->value = value;
@@ -87,41 +87,41 @@ void *np_dict_put(struct NpDict *dict, void *key, void *value)
   return value;
 }
 
-void *np_dict_get(struct NpDict *dict, void *key)
+void *np_hashmap_get(struct NpHashMap *map, void *key)
 {
-  struct NpDictItem *item;
+  struct NpHashMapItem *item;
   int i;
 
-  i = dict->key_hash(key) % dict->size;
-  for (item = dict->items[i]; item != NULL; item = item->next)
-    if (dict->key_compare(key, item->key) == 0)
+  i = map->key_hash(key) % map->size;
+  for (item = map->items[i]; item != NULL; item = item->next)
+    if (map->key_compare(key, item->key) == 0)
       return item->value;
   return NULL;
 }
 
-void *np_dict_remove(struct NpDict *dict, void *key)
+void *np_hashmap_remove(struct NpHashMap *map, void *key)
 {
-  struct NpDictItem *prev;
-  struct NpDictItem *item;
+  struct NpHashMapItem *prev;
+  struct NpHashMapItem *item;
   void *ret;
   int i;
 
   ret = NULL;
   prev = NULL;
-  i = dict->key_hash(key) % dict->size;
-  for (item = dict->items[i]; item != NULL; prev = item, item = item->next)
-    if (dict->key_compare(key, item->key) == 0) {
+  i = map->key_hash(key) % map->size;
+  for (item = map->items[i]; item != NULL; prev = item, item = item->next)
+    if (map->key_compare(key, item->key) == 0) {
       ret = item->value;
       if (prev != NULL)
 	prev->next = item->next;
       else
-	dict->items[i] = NULL;
+	map->items[i] = NULL;
       free(item);
     }
   return ret;
 }
 
-unsigned np_dict_hash(void *key, int length)
+unsigned np_hashmap_hash(void *key, int length)
 {
  /*  Bob Jenkins, one-at-a-time hash */
   unsigned char *p = key;
