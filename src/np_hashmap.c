@@ -17,6 +17,7 @@
  */
 
 #include <stdlib.h>
+
 #include "np_hashmap.h"
 
 struct NpHashMap *np_hashmap_new(int (*key_compare)(void *key1, void *key2),

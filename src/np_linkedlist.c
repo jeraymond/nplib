@@ -17,6 +17,7 @@
  */
 
 #include <stdlib.h>
+
 #include "np_linkedlist.h"
 
 struct NpLinkedList *np_linkedlist_new()
