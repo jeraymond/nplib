@@ -146,7 +146,7 @@ void *np_arraylist_remove(struct NpArrayList *list, int index)
     return NULL;
   size = list->size;
   item = list->data[index];
-  for (i = index; i < list->size; ++i)
+  for (i = index; i < size; ++i)
     list->data[i] = list->data[i + 1];
   list->size--;
   return item;
