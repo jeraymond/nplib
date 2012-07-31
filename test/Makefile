@@ -15,7 +15,7 @@ endif
 all: $(TARGET)
 
 $(TARGET): $(SRC) $(INC)
-	$(CC) $(CCFLAGS) $(SRC) -o $(TARGET)
+	$(CC) $(SRC) -o $(TARGET) $(CCFLAGS)
 
 clean:
 	@-rm -f *.o
