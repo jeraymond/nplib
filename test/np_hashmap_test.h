@@ -19,8 +19,9 @@
 #ifndef __NP_HASHMAP_TEST_H
 #define __NP_HASHMAP_TEST_H
 
+void np_hashmap_test(void);
+void np_hashmap_realloc_test(void);
 int np_hashmap_test_cmp(void *, void *);
 unsigned np_hashmap_test_hash(void *);
-void np_hashmap_test(void);
 
 #endif

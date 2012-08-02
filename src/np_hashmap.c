@@ -24,17 +24,20 @@ struct NpHashMap *np_hashmap_new(int (*key_compare)(void *key1, void *key2),
                             unsigned (*key_hash)(void *key))
 {
   struct NpHashMap *map;
-  int i;
-  int size;
+  unsigned i;
+  unsigned capacity;
 
-  size = HASHMAP_SIZE;
+  capacity = NP_HASHMAP_INITIAL_CAPACITY;
   map = malloc(sizeof *map);
   if (map != NULL) {
-    if ((map->items = malloc(sizeof *map->items * size)) != NULL) {
+    if ((map->items = malloc(sizeof *map->items * capacity)) != NULL) {
       map->key_compare = key_compare;
       map->key_hash = key_hash;
-      map->size = size;
-      for (i = 0; i < size; ++i)
+      map->capacity = capacity;
+      map->size = 0;
+      map->load_factor = NP_HASHMAP_DEFAULT_LOAD_FACTOR;
+      map->threshold = map->capacity * map->load_factor;
+      for (i = 0; i < capacity; ++i)
 	map->items[i] = NULL;
     } else {
       free(map);
@@ -50,10 +53,10 @@ void np_hashmap_free(struct NpHashMap *map)
   struct NpHashMapItem *next;
   unsigned i;
 
-  for (i = 0; i < map->size; ++i) {
+  for (i = 0; i < map->capacity; ++i) {
     if ((item = map->items[i]) == NULL)
       continue;
-    while(item) {
+    while (item) {
       next = item->next;
       free(item);
       item = next;
@@ -63,12 +66,54 @@ void np_hashmap_free(struct NpHashMap *map)
   free(map);
 }
 
+static struct NpHashMap *np_hashmap_realloc(struct NpHashMap *map)
+{
+  if (map->size == map->threshold) {
+    struct NpHashMap new_map;
+    struct NpHashMapItem *item;
+    struct NpHashMapItem *next;
+    unsigned new_capacity;
+    unsigned i;
+
+    new_capacity = map->capacity * 2;
+    if ((new_map.items = malloc(sizeof *new_map.items * new_capacity)) == NULL)
+      return NULL;
+    new_map.key_compare = map->key_compare;
+    new_map.key_hash = map->key_hash;
+    new_map.capacity = new_capacity;
+    new_map.size = 0;
+    new_map.load_factor = map->load_factor;
+    new_map.threshold = new_capacity * new_map.load_factor;
+    for (i = 0; i < new_capacity; ++i)
+      new_map.items[i] = NULL;
+
+    for (i = 0; i < map->capacity; ++i) {
+      if ((item = map->items[i]) == NULL)
+	continue;
+      while (item) {
+	next = item->next;
+	np_hashmap_put(&new_map, item->key, item->value);
+	free(item);
+	item = next;
+      }
+    }
+    free(map->items);
+    map->items = new_map.items;
+    map->capacity = new_capacity;
+    map->threshold = new_map.threshold;
+  }
+  return map;
+}
+
 void *np_hashmap_put(struct NpHashMap *map, void *key, void *value)
 {
   struct NpHashMapItem *item;
-  int i;;
+  unsigned i;
 
-  i = map->key_hash(key) % map->size;
+  map = np_hashmap_realloc(map);
+  if (map == NULL)
+    return NULL;
+  i = map->key_hash(key) % map->capacity;
   for (item = map->items[i]; item != NULL; item = item->next)
     if (map->key_compare(key, item->key) == 0)
       break;
@@ -81,6 +126,7 @@ void *np_hashmap_put(struct NpHashMap *map, void *key, void *value)
       item->value = value;
       item->next = map->items[i];
       map->items[i] = item;
+      map->size++;
     }
   } else {
     item->value = value;
@@ -91,9 +137,9 @@ void *np_hashmap_put(struct NpHashMap *map, void *key, void *value)
 void *np_hashmap_get(struct NpHashMap *map, void *key)
 {
   struct NpHashMapItem *item;
-  int i;
+  unsigned i;
 
-  i = map->key_hash(key) % map->size;
+  i = map->key_hash(key) % map->capacity;
   for (item = map->items[i]; item != NULL; item = item->next)
     if (map->key_compare(key, item->key) == 0)
       return item->value;
@@ -105,11 +151,11 @@ void *np_hashmap_remove(struct NpHashMap *map, void *key)
   struct NpHashMapItem *prev;
   struct NpHashMapItem *item;
   void *ret;
-  int i;
+  unsigned i;
 
   ret = NULL;
   prev = NULL;
-  i = map->key_hash(key) % map->size;
+  i = map->key_hash(key) % map->capacity;
   for (item = map->items[i]; item != NULL; prev = item, item = item->next)
     if (map->key_compare(key, item->key) == 0) {
       ret = item->value;
@@ -118,6 +164,7 @@ void *np_hashmap_remove(struct NpHashMap *map, void *key)
       else
 	map->items[i] = NULL;
       free(item);
+      map->size--;
     }
   return ret;
 }

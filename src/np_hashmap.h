@@ -19,7 +19,8 @@
 #ifndef __NP_HASHMAP_H
 #define __NP_HASHMAP_H
 
-#define HASHMAP_SIZE 256
+#define NP_HASHMAP_INITIAL_CAPACITY 16
+#define NP_HASHMAP_DEFAULT_LOAD_FACTOR 0.75
 
 /**
    Hash map object.
@@ -45,9 +46,24 @@ struct NpHashMap {
   unsigned (*key_hash)(void *key);
 
   /**
+     The map capacity.
+  */
+  unsigned capacity;
+
+  /**
      The number of items in the map.
   */
   unsigned size;
+
+  /**
+     The next size at which the map will grow (capacity * load_factor).
+   */
+  unsigned threshold;
+
+  /**
+     The load factor.
+  */
+  float load_factor;
 
   /**
      A Pointer to the items.

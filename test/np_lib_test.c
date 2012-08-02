@@ -42,6 +42,9 @@ int main(void)
   if (CU_add_test(pSuite, "Hash Map Tests", np_hashmap_test) == NULL) {
     goto exit;
   }
+  if (CU_add_test(pSuite, "Hash Map Realloc Tests", np_hashmap_realloc_test) == NULL) {
+    goto exit;
+  }
 
   /* tree map */
   if (CU_add_test(pSuite, "Tree Map Tests", np_treemap_test) == NULL) {
