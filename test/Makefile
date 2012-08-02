@@ -3,7 +3,7 @@ TARGET = np-lib-test
 INC = np_hashmap_test.h np_treemap_test.h np_linkedlist_test.h np_arraylist_test.h
 SRC = np_hashmap_test.c np_treemap_test.c np_linkedlist_test.c np_arraylist_test.c
 SRC += np_lib_test.c
-CCFLAGS = -std=c99 -pedantic -Wall -g -O2 -ansi -lcunit -lnplib -I ../src \
+CCFLAGS = -std=c99 -pedantic -Wall -g -O2 -lcunit -lnplib -I ../src \
 		-L ../src
 LD_PATH = ../src
 ifeq ($(UNAME),Darwin)

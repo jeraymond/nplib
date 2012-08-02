@@ -19,6 +19,7 @@
 #include <CUnit/Basic.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "np_hashmap_test.h"
 #include "np_hashmap.h"
