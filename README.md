@@ -9,12 +9,36 @@ A utility C library of various data structures and algorithms.
 A successful compilation results in a dynamically linked library located at
 `src/libnplib.so`.
 
+Note: Use `gmake` on FreeBSD
+
 ## Testing
 
      $ make check
 
 Builds `src/libnplib.so` then builds and runs a C-Unit based test program in
 `test/np-lib-test`.
+
+Note: Use `gmake` on FreeBSD
+
+### Test Dependencies
+
+The tests use CUnit. Ensure you have CUnit installed.
+
+On Linux (Ubuntu): `apt-get install libcunit1 libcunit1-dev`
+
+On FreeBSD: `pkd_add -r cunit`
+
+On OS X
+
+1. Download Cunit: http://sourceforge.net/projects/cunit/files/CUnit/2.1-2/
+2. Extract it
+3. Configure and install it
+
+```bash
+./configure
+make
+make install
+```
 
 ## Data Structures
 

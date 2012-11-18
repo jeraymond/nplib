@@ -3,8 +3,8 @@ TARGET = np-lib-test
 INC = np_hashmap_test.h np_treemap_test.h np_linkedlist_test.h np_arraylist_test.h
 SRC = np_hashmap_test.c np_treemap_test.c np_linkedlist_test.c np_arraylist_test.c
 SRC += np_lib_test.c
-CCFLAGS = -std=c99 -pedantic -Wall -g -O2 -lcunit -lnplib -I ../src \
-		-L ../src
+CFLAGS += -std=c99 -pedantic -Wall -g -O2 -I ../src
+LDFLAGS += -lcunit -lnplib -L ../src
 LD_PATH = ../src
 ifeq ($(UNAME),Darwin)
 	LD_LIB = DYLD_LIBRARY_PATH
@@ -12,10 +12,16 @@ else
 	LD_LIB = LD_LIBRARY_PATH
 endif
 
+# Finding CUnit on FreeBSD
+ifeq ($(UNAME),FreeBSD)
+	CFLAGS += -I/usr/local/include
+	LDFLAGS += -L/usr/local/lib
+endif
+
 all: $(TARGET)
 
 $(TARGET): $(SRC) $(INC)
-	$(CC) $(SRC) -o $(TARGET) $(CCFLAGS)
+	$(CC) $(CFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS)
 
 clean:
 	@-rm -f *.o
