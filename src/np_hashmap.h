@@ -102,7 +102,7 @@ struct NpHashMap *np_hashmap_new(int (*cmp)(void *key1, void *key2),
                             unsigned (*hash)(void *key));
 
 /**
-   Frees the memory used by the  map. Does not free the keys or values.
+   Frees the memory used by the map. Does not free the keys or values.
 
    @param map the map to free
 */
